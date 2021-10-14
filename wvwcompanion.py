@@ -67,4 +67,5 @@ def listWorlds():
         print(str(worlds[i][0]) + " ID: " + str(worlds[i][1]))
     return
    
-printMatchInfo(gw2lib.getMatchId(gw2lib.getAccountWorld(key)))
+#printMatchInfo(gw2lib.getMatchId(gw2lib.getAccountWorld(key)))
+gw2lib.getMaterials(key)
