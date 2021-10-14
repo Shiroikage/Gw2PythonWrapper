@@ -63,4 +63,3 @@ def getAccountWorld(apikey): #filter account data for WorldId (ServerId)
     accdata = getAccountData(apikey)
     worldid = accdata["world"]
     return worldid
-

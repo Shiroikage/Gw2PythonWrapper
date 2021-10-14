@@ -1,5 +1,3 @@
-#https://wiki.guildwars2.com/wiki/API:1/wvw/objective_names
-#https://wiki.guildwars2.com/wiki/API:1/wvw/match_details
 import gw2lib
 import json
 
@@ -60,6 +58,7 @@ def printMatchInfo(matchid): #print some basic match info for given matchid
     print("Deaths: " + str(bdeaths))
     print("K/D: " + str(bkd))
     print()
+    return
 
 def listWorlds():
     worlds = gw2lib.getAllWorlds()
@@ -67,6 +66,5 @@ def listWorlds():
     for i in range(len(worlds)):
         print(str(worlds[i][0]) + " ID: " + str(worlds[i][1]))
     return
-    
-    
-print(printMatchInfo(gw2lib.getMatchId(gw2lib.getAccountWorld(key)))
+   
+printMatchInfo(gw2lib.getMatchId(gw2lib.getAccountWorld(key)))
