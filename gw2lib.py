@@ -54,7 +54,7 @@ def getAllWorlds(): #give back an 2 dimensional array of all worlds where the se
         worlds[i][1] = tempworld["id"]
     return worlds
 
-def getAccountData(api_key): #get the unspecific account data example: https://api.guildwars2.com/v2/account?access_token=***REMOVED***
+def getAccountData(api_key): #get the unspecific account data example: https://api.guildwars2.com/v2/account?access_token=API_KEY
     suffix = "account?access_token="
     accdata = requests.get(api_base + suffix + api_key)
     accdata = accdata.json()
