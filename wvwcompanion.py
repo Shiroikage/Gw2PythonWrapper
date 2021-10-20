@@ -1,7 +1,10 @@
 import gw2lib
 import json
 
-key = "***REMOVED***"
+f = open("api_key.txt", "r")
+key = f.read()
+f.close
+
 
 def printMatchInfo(matchid): #print some basic match info for given matchid
     n = 0
