@@ -1,12 +1,13 @@
 import gw2lib
 import json
+import asyncio
 
 f = open("api_key.txt", "r")
 key = f.read()
 f.close
 
 
-def printMatchInfo(matchid): #print some basic match info for given matchid
+async def printMatchInfo(matchid): #print some basic match info for given matchid
     n = 0
     green = []
     red = []
@@ -30,15 +31,16 @@ def printMatchInfo(matchid): #print some basic match info for given matchid
         blue.append(gw2lib.getWorldname(blueids[n]))
         n += 1
     n = 0
-    gkills = gw2lib.getKills(matchinfo, "green")
-    gdeaths = gw2lib.getDeaths(matchinfo, "green")
-    gkd = gkills/gdeaths #green K/D
-    rkills = gw2lib.getKills(matchinfo, "red")
-    rdeaths = gw2lib.getDeaths(matchinfo, "red")
-    rkd = rkills/rdeaths #red K/D
-    bkills = gw2lib.getKills(matchinfo, "blue")
-    bdeaths = gw2lib.getDeaths(matchinfo, "blue")
+    gkills = asynio.create_task(gw2lib.getKills(matchinfo, "green"))
+    gdeaths = asynio.create_task(gw2lib.getDeaths(matchinfo, "green"))
+    rkills = asynio.create_task(gw2lib.getKills(matchinfo, "red"))
+    rdeaths = asynio.create_task(gw2lib.getDeaths(matchinfo, "red"))
+    bkills = asynio.create_task(gw2lib.getKills(matchinfo, "blue"))
+    bdeaths = asynio.create_task(gw2lib.getDeaths(matchinfo, "blue"))
+    await gkills, rkills, bkills, gdeaths, rdeaths, bdeaths
     bkd = bkills/bdeaths #blue K/D
+    gkd = gkills/gdeaths #green K/D
+    rkd = rkills/rdeaths #red K/D
     print()
     print("green Team: ", end = "")
     print(*green, sep = ", ")
@@ -71,4 +73,7 @@ def listWorlds():
     return
    
 #printMatchInfo(gw2lib.getMatchId(gw2lib.getAccountWorld(key)))
-gw2lib.getMaterials(key)
+#gw2lib.getMaterials(key)
+accdat = gw2lib.getAccountData(key)
+print(accdat)
+asyncio.run(printMatchInfo(gw2lib.getMatchId(accdat["world"]))) #why does it give Invalid access token back when it's the right one?!

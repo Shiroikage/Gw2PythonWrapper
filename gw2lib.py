@@ -1,5 +1,6 @@
 import requests
 import json
+import asyncio
 
 api_base = "https://api.guildwars2.com/v2/"
 
@@ -35,13 +36,13 @@ def getAllMatchInfo(matchid):  # drops all matchinfo when given the matchid
     return matchdetails
 
 
-def getKills(match, team):  # give back kills out of given match !object! not matchid, to avoide unnecessary requests; give it the output of getAllMatchInfo + team (red, blue, green)
+async def getKills(match, team):  # give back kills out of given match !object! not matchid, to avoide unnecessary requests; give it the output of getAllMatchInfo + team (red, blue, green)
     kills = match["kills"]
     kills = kills[team]
     return kills
 
 
-def getDeaths(match, team):  # give back deaths out of given match !object! not matchid, to avoide unnecessary requests; give it the output of getAllMatchInfo + team (red, blue, green)
+async def getDeaths(match, team):  # give back deaths out of given match !object! not matchid, to avoide unnecessary requests; give it the output of getAllMatchInfo + team (red, blue, green)
     deaths = match["deaths"]
     deaths = deaths[team]
     return deaths
@@ -64,24 +65,13 @@ def getAllWorlds():
 # get the unspecific account data example: https://api.guildwars2.com/v2/account?access_token=API_KEY
 def getAccountData(api_key):
     suffix = "account?access_token="
+    print(api_base + suffix + api_key) #debug
     accdata = requests.get(api_base + suffix + api_key)
     accdata = accdata.json()
     return accdata
 
 # TODO: directly give struct and not the key to minimize requests for all following functions that use the same struct
-
-
-def getAccountWorld(api_key):  # filter account data for WorldId (ServerId), needs API key
-    accdata = getAccountData(api_key)
-    worldid = accdata["world"]
-    return worldid
-
-
-def getFLevel(api_key):  # filter account data for Fractal level, needs API key
-    accdata = getAccountData(api_key)
-    flevel = accdata["fractal_level"]
-    return flevel
-
+# TODO: kill FLevel/getAccountWorld cause getAccountData is enoug
 
 def getMaterials(api_key):  # get Account Materials and put the name in the struct for every item (normal api call only gives item-ids back)
     suffix = "account/materials?access_token="
@@ -94,7 +84,6 @@ def getMaterials(api_key):  # get Account Materials and put the name in the stru
         materials[i] = current_material
         print(materials[i])  # debug
     return
-
 
 # get whole struct of an item example: https://api.guildwars2.com/v2/items/82761
 def getItemInfo(itemid):
