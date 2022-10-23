@@ -1,20 +1,4 @@
 # Gw2PythonWrapper
 
-getAccountData(api_key):
-Output:
-{
-  "id": STR,
-  "name": STR,
-  "age": INT, #age of account in seconds
-  "world": INT, #WorldId
-  "guilds": ARRAY, #array of GuildIds
-  "guild_leader": ARRAY,
-  "created": STR, #ISO-8601 standard timestamp
-  "access": ARRAY,
-  "commander": BOOL,
-  "fractal_level": INT,
-  "daily_ap": INT,
-  "monthly_ap": INT,
-  "wvw_rank": INT
-}
-                
+As of now there is not much to see here.
+everything here is broken atm and i'll probably continue this project at another point in time. I want to handle everything where its possible async but i have to wrap my head around that first.
